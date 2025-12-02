@@ -6,6 +6,8 @@ const std = @import("std");
 const days = [_][:0]const u8{
     "day01a",
     "day01b",
+    "day02a",
+    "day02b",
 };
 
 pub fn build(b: *std.Build) void {
