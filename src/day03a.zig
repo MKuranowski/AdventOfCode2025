@@ -18,7 +18,7 @@ pub fn main() !void {
     h.print("{d}\n", .{total});
 }
 
-fn maxIdx(comptime T: type, slice: []const T, start_pos: usize) struct { usize, T } {
+pub fn maxIdx(comptime T: type, slice: []const T, start_pos: usize) struct { usize, T } {
     std.debug.assert(slice.len > start_pos);
     var best = slice[start_pos];
     var best_idx: usize = start_pos;
@@ -31,7 +31,7 @@ fn maxIdx(comptime T: type, slice: []const T, start_pos: usize) struct { usize, 
     return .{ best_idx, best };
 }
 
-fn digitToInt(digit: u8) u32 {
+pub fn digitToInt(digit: u8) u32 {
     return switch (digit) {
         '0' => 0,
         '1' => 1,

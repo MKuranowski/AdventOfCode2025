@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 const std = @import("std");
+const a = @import("./day02a.zig");
 const h = @import("helper");
 
 pub fn main() !void {
@@ -11,7 +12,7 @@ pub fn main() !void {
     var ranges = std.mem.splitScalar(u8, std.mem.trimEnd(u8, input, "\r\n"), ',');
     var total: u64 = 0;
     while (ranges.next()) |range| {
-        const start, const end = try parseRange(range);
+        const start, const end = try a.parseRange(range);
 
         for (start..end + 1) |i| {
             if (!isValid(i)) {
@@ -19,13 +20,8 @@ pub fn main() !void {
             }
         }
     }
-}
 
-fn parseRange(r: []const u8) !struct { u64, u64 } {
-    var it = std.mem.splitScalar(u8, r, '-');
-    const start = try std.fmt.parseInt(u64, it.next() orelse "", 10);
-    const end = try std.fmt.parseInt(u64, it.next() orelse "", 10);
-    return .{ start, end };
+    h.print("{d}\n", .{total});
 }
 
 fn isValid(i: u64) bool {

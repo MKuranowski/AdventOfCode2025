@@ -23,7 +23,7 @@ pub fn main() !void {
     h.print("{d}\n", .{total});
 }
 
-fn parseRange(r: []const u8) !struct { u64, u64 } {
+pub fn parseRange(r: []const u8) !struct { u64, u64 } {
     var it = std.mem.splitScalar(u8, r, '-');
     const start = try std.fmt.parseInt(u64, it.next() orelse "", 10);
     const end = try std.fmt.parseInt(u64, it.next() orelse "", 10);
