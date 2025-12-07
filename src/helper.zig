@@ -47,3 +47,49 @@ pub const InputLines = struct {
         return std.mem.trimEnd(u8, line, "\r\n");
     }
 };
+
+pub fn HashSet(comptime T: type) type {
+    return struct {
+        map: std.AutoArrayHashMapUnmanaged(T, void) = .{},
+
+        const Self = @This();
+
+        pub fn deinit(self: *Self) void {
+            self.map.deinit(std.heap.smp_allocator);
+        }
+
+        pub fn clearRetainingCapacity(self: *Self) void {
+            self.map.clearRetainingCapacity();
+        }
+
+        pub fn len(self: Self) usize {
+            return self.map.count();
+        }
+
+        pub fn add(self: *Self, item: T) std.mem.Allocator.Error!void {
+            try self.map.put(std.heap.smp_allocator, item, {});
+        }
+
+        pub fn remove(self: *Self, item: T) void {
+            _ = self.map.swapRemove(item);
+        }
+
+        pub fn has(self: Self, item: T) bool {
+            return self.map.contains(item);
+        }
+
+        pub fn iter(self: Self) []T {
+            return self.map.keys();
+        }
+
+        pub fn move(self: *Self) Self {
+            return .{ .map = self.map.move() };
+        }
+
+        pub fn swap(self: *Self, other: *Self) void {
+            const tmp = self.move();
+            self.* = other.move();
+            other.* = tmp;
+        }
+    };
+}

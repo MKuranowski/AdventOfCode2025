@@ -6,10 +6,10 @@ const a = @import("day04a.zig");
 const h = @import("helper");
 
 pub fn main() !void {
-    var rolls = try a.PositionSet.loadFromInput();
+    var rolls = try a.loadInput();
     defer rolls.deinit();
 
-    var to_remove = a.PositionSet{};
+    var to_remove = h.HashSet(a.Position){};
     defer to_remove.deinit();
 
     var total: u32 = 0;
