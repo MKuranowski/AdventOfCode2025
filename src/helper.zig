@@ -93,3 +93,11 @@ pub fn HashSet(comptime T: type) type {
         }
     };
 }
+
+pub fn countScalar(comptime T: type, haystack: []const T, needle: T) usize {
+    var total: usize = 0;
+    for (haystack) |elem| {
+        total += @intFromBool(elem == needle);
+    }
+    return total;
+}
